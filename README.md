@@ -1,2 +1,15 @@
-# manuel.lorentea-juanangel.garridol-4.1-pr2
-Trunk based development assessment 
+# DevOps-P02
+
+## Trunk based development
+
+### Commit
+
+    ```sh
+    git commit -m "Commit message"
+    ```
+
+### Push
+
+    ```sh
+        git push origin main
+    ```  
