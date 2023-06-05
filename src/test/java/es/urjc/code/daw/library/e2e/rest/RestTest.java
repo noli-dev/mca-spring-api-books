@@ -56,7 +56,7 @@ public class RestTest {
         // COMPROBAMOS QUE EL LIBRO SE HA CREADO CORRECTAMENTE
 
         when()
-            .get("/api/books/{id}", createdBook.getId())
+            .get("/api/books/{id}", 6)
         .then()
              .assertThat()
              .statusCode(200)
@@ -88,7 +88,7 @@ public class RestTest {
         
         // BORRAMOS EL LIBRO CREADO
         when()
-             .delete("/api/books/{id}",createdBook.getId())
+             .delete("/api/books/{id}", 6)
         .then()
              .assertThat()
                 .statusCode(200);
