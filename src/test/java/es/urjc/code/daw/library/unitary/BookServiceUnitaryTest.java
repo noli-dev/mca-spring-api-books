@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.togglz.core.manager.FeatureManager;
 
 import es.urjc.code.daw.library.book.Book;
 import es.urjc.code.daw.library.book.BookRepository;
@@ -22,11 +23,9 @@ public class BookServiceUnitaryTest {
 
     @BeforeEach
 	public void setup() {
-        
         repository = mock(BookRepository.class);
         notificationService = mock(NotificationService.class);
-        bookService = new BookService(repository, notificationService);
-			
+        bookService = new BookService(mock(FeatureManager.class), repository, notificationService);
     }
 
     @Test

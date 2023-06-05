@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.togglz.core.manager.FeatureManager;
 
 import es.urjc.code.daw.library.notification.NotificationService;
+import es.urjc.code.daw.library.toggle.Features;
 
 /* Este servicio se usará para incluir la funcionalidad que sea 
  * usada desde el BookRestController y el BookWebController
@@ -15,8 +17,11 @@ public class BookService {
 
 	private BookRepository repository;
 	private NotificationService notificationService;
+	private FeatureManager featureManager;
+	private LineBreaker lineBreaker = new LineBreaker();
 
-	public BookService(BookRepository repository, NotificationService notificationService){
+	public BookService(FeatureManager featureManager, BookRepository repository, NotificationService notificationService){
+		this.featureManager = featureManager;
 		this.repository = repository;
 		this.notificationService = notificationService;
 	}
@@ -34,7 +39,8 @@ public class BookService {
 	}
 
 	public Book save(Book book) {
-		Book newBook = repository.save(book);
+		Book newBook = featureManager.isActive(Features.LINE_BREAKER) ? breakLines(book) : book;
+		repository.save(newBook);
 		notificationService.notify("Book Event: book with title="+newBook.getTitle()+" was created");
 		return newBook;
 	}
@@ -42,5 +48,11 @@ public class BookService {
 	public void delete(long id) {
 		repository.deleteById(id);
 		notificationService.notify("Book Event: book with id="+id+" was deleted");
+	}
+
+	public Book breakLines(Book book) {
+		book.setDescription(this.lineBreaker.breakLine(book.getDescription(), 10));
+		notificationService.notify("Book Event: book with title="+book.getTitle()+" was updated");
+		return book;
 	}
 }
