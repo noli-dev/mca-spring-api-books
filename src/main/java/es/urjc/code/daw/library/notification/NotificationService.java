@@ -1,16 +1,29 @@
 package es.urjc.code.daw.library.notification;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.togglz.core.manager.FeatureManager;
 
-@Component
+import es.urjc.code.daw.library.toggle.Features;
+
+@Service
 public class NotificationService {
 
-    Logger logger = LoggerFactory.getLogger(NotificationService.class);
+    private final FeatureManager featureManager;
+    private final NotificationByEventService notificationByEventService;
+    private final NotificationByLogService notificationByLogService;
+
+    public NotificationService(FeatureManager featureManager, NotificationByEventService notificationByEventService, NotificationByLogService notificationByLogService) {
+        this.featureManager = featureManager;
+        this.notificationByEventService = notificationByEventService;
+        this.notificationByLogService = notificationByLogService;
+    }
 
     public void notify(String message) {
-        logger.info(message);
+        if (featureManager.isActive(Features.NOTIFICATIONS_BY_EVENT)) {
+            notificationByEventService.notify(message);
+        } else {
+            notificationByLogService.notify(message);
+        }
     }
+    
 }
-

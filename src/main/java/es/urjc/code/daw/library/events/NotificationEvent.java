@@ -8,7 +8,7 @@ public class NotificationEvent extends ApplicationEvent{
     
     public NotificationEvent(Object source, String message) {
         super(source);
-        this.message = "EVENT: " + message;
+        this.message = "NOTIFICATION BY EVENT - " + message;
     }
 
     public String getMessage() {
