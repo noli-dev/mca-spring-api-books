@@ -5,7 +5,10 @@ import org.togglz.core.annotation.Label;
 
 public enum Features implements Feature{
     
-    @Label("Activates line breaker")
-    LINE_BREAKER
+    @Label("Lines breaker")
+    LINE_BREAKER,
+
+    @Label("Notifications by event")
+    NOTIFICATIONS_BY_EVENT
 
 }
