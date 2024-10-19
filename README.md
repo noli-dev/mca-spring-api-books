@@ -55,6 +55,14 @@ To run the unitary and end-to-end tests:
     mvn test
     ```
 
+## Deployment strategies
+
+- **Canary deployment**: Deploy the new version of the application to a subset of users to test the new features and gather feedback before rolling out to the entire user base.
+
+- **Blue-green deployment**: Deploy the new version of the application alongside the existing version. Once the new version is tested and ready, switch the traffic to the new version.
+
+- **Parallel change deployment**: Deploy the new version of the application in parallel with the existing version. Gradually migrate users to the new version while monitoring the performance and stability of the application.
+
 ## Change Log
 
 | **Version** | **Description** |
